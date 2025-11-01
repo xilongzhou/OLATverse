@@ -1,5 +1,5 @@
 # OLATverse
-This is the official repository for **OLATverse**.
+This is the official repository for **OLATverse**. Update coming soon.
 
 ## 📝 To-Do List
 
