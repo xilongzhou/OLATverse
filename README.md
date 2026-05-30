@@ -1,5 +1,7 @@
 # OLATverse: A Large-Scale Real-World Object Dataset with Precise Lighting Control
 
+### CVPR 2026 Oral
+
 This is the official repository for **OLATverse**.
 
 ![OLATverse](assets/img.png)
