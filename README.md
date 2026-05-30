@@ -61,6 +61,8 @@ Each camera folder contains **363 AVIF images** with the following structure:
 
 #### ▸ all_cam.json
 
+Calibrated camera for each object:
+
 | Field | Description |
 |-------|-------------|
 | `cam_idx` | Camera ID |
@@ -68,6 +70,8 @@ Each camera folder contains **363 AVIF images** with the following structure:
 | `camera_intrinsics` | Intrinsic matrix |
 
 #### ▸ pbr/
+
+Extracted pseudo-GT normal/albedo for each object:
 
 | File | Description |
 |------|-------------|
@@ -97,6 +101,8 @@ data-{date}-{objID}/
 ```
 
 #### ▸ transforms_train.json / transforms_test.json
+
+Train and validation cameras/lights utilized in our benchmarking in the paper
 
 | Field | Description |
 |-------|-------------|
@@ -142,6 +148,8 @@ Our setup contains **331 individually controlled lights**. Lighting information 
 > **Note:** Pure black images in `envmap_zspiral_mpi/` correspond to full-bright (FB) captures. The **light IDs in the raw metadata do not correspond to `light_idx` in `all_lights.json`**.
 
 #### ▸ all_lights.json
+
+331 lighting information shared across all objects:
 
 | Field | Description |
 |-------|-------------|
