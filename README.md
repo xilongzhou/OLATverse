@@ -1,6 +1,6 @@
 # OLATverse: A Large-Scale Real-World Object Dataset with Precise Lighting Control 
+<h2 style="font-size: 1.7em;">CVPR 2026 (<span style="color:#e05c2a">Oral</span>)</h2>
 
-## CVPR 2026 (Oral)
 
 This is the official repository for **OLATverse**.
 
