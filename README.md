@@ -129,7 +129,7 @@ Each object is captured from **35 camera views** distributed across four layers 
 
 ### 3.2 Lights
 
-The setup contains **331 individually controlled lights**. Lighting information is provided in the `shared/` folder:
+Our setup contains **331 individually controlled lights**. Lighting information is shared across all the objects, and provided in the `shared/` folder:
 
 | File | Description |
 |------|-------------|
