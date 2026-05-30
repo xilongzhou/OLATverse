@@ -49,3 +49,5 @@ python batch_relit.py --env street --source_path $OLAT_PATH --obj_list data-0403
 ## Output
 
 Results are saved to `./out_final/relight_{scale}/$SUBJECT_ID/$ENV_NAME/`, containing per-frame `.png` images and a `.mp4` rotation video.
+
+> **Note:** For some subjects, relighing results under some environment maps contain noisy artifacts due to the existence of unavoidable noise at low-reflectance/dark regions in captured OLATs. Feel free to adjust scale factor or play with other parameters to avoid this.

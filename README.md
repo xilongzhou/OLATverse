@@ -11,20 +11,21 @@ This is the official repository for **OLATverse**.
 
 ## 1. Dataset Download
 
-The processed OLATverse dataset is available at the [dataset link](https://gvv-assets.mpi-inf.mpg.de/OLATverse/). It consists of:
+The processed OLATverse dataset is available at the [dataset link](https://gvv-assets.mpi-inf.mpg.de/OLATverse/). Users need to register an account and request access to the dataset.
+
+The Dataset consists of:
 
 - **OLATverse_Tr** — the full training set containing **767 objects**, split into 11 archives (`OLATverse_Tr0001-0070.tar.gz`, ..., `OLATverse_Tr0701-0767.tar.gz`), each containing approximately 70 objects.
 - **OLATverse_Val** — a curated validation set containing **42 objects**.
 
-A per-object preview is available in [assets/preview.xlsx](assets/preview.xlsx).
+An offline Excel for all object preview is available at [assets/preview.xlsx](assets/preview.xlsx). It includes the capture date, object ID, category label, LVIS category, and material types (up to 2 per object). The final object ID used across OLATverse follows this format: `data-{date}-{objectID}`
 
 To reduce storage and improve visualization, all captured images are processed as follows:
 - Downsampled to **1500 × 2844** resolution
-- Brightness adjusted for better visualization
+- Brightness adjusted by scale of 2.0 for better visualization
 - Converted to sRGB and stored as **AVIF**
 - Background masked out
-
-Auxiliary data including masks, pseudo-GT normals, and diffuse albedo are also provided.
+- Auxiliary data including masks, pseudo-GT normals, and diffuse albedo are also provided.
 
 ---
 
@@ -166,3 +167,29 @@ The table below shows example correspondences between `masked_olat/`, `all_light
 | `obj_id.000360` | `light_idx` 329 | `346.png` |
 | `obj_id.000361` | `light_idx` 330 | `347.png` |
 | `obj_id.000362` (FB) | — | `348.png` |
+
+---
+
+## 4. Relighting
+
+We provide relighting code to render 360° rotation videos for OLATverse subjects under various environment maps. See [`relighting/README.md`](relighting/README.md) for setup and usage instructions.
+
+---
+
+Due to large storage costs, it is difficult to release RAW HDR images for the full dataset. If you have any questions, suggestions, or requests for RAW linear EXR data of several objects, please contact xzhou@mpi-inf.mpg.de.
+
+---
+
+## Citation
+
+If you find our dataset helpful, please consider citing our work:
+
+```bibtex
+@inproceedings{zhou2026olatverse,
+  title={OLATverse: A Large-scale Real-world Object Dataset with Precise Lighting Control},
+  author={Zhou, Xilong and Chen, Jianchun and Rao, Pramod and Teufel, Timo and Lyu, Linjie and Minasian, Tigran and Sotnychenko, Oleksandr and Long, Xiao-Xiao and Habermann, Marc and Theobalt, Christian},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={28848--28859},
+  year={2026}
+}
+```
