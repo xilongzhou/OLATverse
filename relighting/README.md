@@ -36,8 +36,13 @@ olat_relight/example_envmaps/
 python batch_relit.py \
     --env $ENV_NAME \
     --source_path $OLAT_PATH \
-    --obj_list data-040325-C091
+    --obj_list $SUBJECT_IDs
 ```
+For example:
+```bash
+python batch_relit.py --env street --source_path $OLAT_PATH --obj_list data-040325-C091 data-040325-C014
+```
+
 
 ---
 
