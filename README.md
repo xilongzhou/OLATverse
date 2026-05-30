@@ -1,6 +1,4 @@
-# OLATverse: A Large-Scale Real-World Object Dataset with Precise Lighting Control
-
-### CVPR 2026 Oral
+# OLATverse: A Large-Scale Real-World Object Dataset with Precise Lighting Control (CVPR 2026 Oral)
 
 This is the official repository for **OLATverse**.
 
@@ -8,6 +6,8 @@ This is the official repository for **OLATverse**.
 
 **Project page**: [https://vcai.mpi-inf.mpg.de/projects/OLATverse/](https://vcai.mpi-inf.mpg.de/projects/OLATverse/)  
 **Dataset**: [https://gvv-assets.mpi-inf.mpg.de/OLATverse/](https://gvv-assets.mpi-inf.mpg.de/OLATverse/)
+**Preview Excel**: [assets/preview.xlsx](assets/preview.xlsx)
+
 
 ---
 
