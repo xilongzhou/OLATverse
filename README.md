@@ -11,7 +11,7 @@
 
 ## 1. Dataset Download
 
-For user convenience, we release the **processed** OLATverse at the [dataset link](https://gvv-assets.mpi-inf.mpg.de/OLATverse/). Users need to register an account and request access to the dataset. The Dataset consists of:
+For user convenience, we release the **processed** OLATverse at the [dataset link](https://gvv-assets.mpi-inf.mpg.de/OLATverse/). Users need to register an account and request access to the dataset. The dataset consists of:
 
 - **OLATverse_Tr** — the full training set containing **767 objects**, split into 11 archives (`OLATverse_Tr0001-0070.tar.gz`, ..., `OLATverse_Tr0701-0767.tar.gz`), each containing approximately 70 objects.
 - **OLATverse_Val** — a curated validation set containing **42 objects**.
