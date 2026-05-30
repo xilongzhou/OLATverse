@@ -18,7 +18,7 @@ The Dataset consists of:
 - **OLATverse_Tr** — the full training set containing **767 objects**, split into 11 archives (`OLATverse_Tr0001-0070.tar.gz`, ..., `OLATverse_Tr0701-0767.tar.gz`), each containing approximately 70 objects.
 - **OLATverse_Val** — a curated validation set containing **42 objects**.
 
-An offline Excel for all object preview is available at [assets/preview.xlsx](assets/preview.xlsx). It includes the capture date, object ID, category label, LVIS category, and material types (up to 2 per object). The final object ID used across OLATverse follows this format: `data-{date}-{objectID}`
+An offline Excel for all object preview is available at [excel link](assets/preview.xlsx). It includes the capture date, object ID, category label, LVIS category, and material types (up to 2 per object). The final object ID used across OLATverse follows this format: `data-{date}-{objectID}`
 
 To reduce storage and improve visualization, all captured images are processed as follows:
 - Downsampled to **1500 × 2844** resolution
@@ -38,7 +38,7 @@ The structure of each object folder is as follows:
 ```
 data-{date}-{objID}/
 ├── masked_olat/                                        # 35 camera views, background removed
-│   ├── Cam01/    xxx.000000.avif - xxx.000362.avif    # 363 AVIF images per camera
+│   ├── Cam01/    xxx.000000.avif - xxx.000362.avif     # 363 AVIF images per camera
 │   ├── Cam02/
 │   └── ...
 ├── mask/                                               # Foreground masks for 35 views
