@@ -1,54 +1,168 @@
-# Dataset Structure
+# OLATverse: A Large-Scale Real-World Object Dataset with Precise Lighting Control
 
-This document describes the folder layout and contents of the OLAT dataset splits used for training and validation.
+This is the official repository for **OLATverse**.
 
----
+![OLATverse](assets/img.png)
 
-## `Tr_Dataset`
-
-Raw training data with background.
-
-| Path | Description |
-|------|-------------|
-| `olat/` | AVIF images **with** background |
-| `mask/` | Mask images (same as `OLATverse_Upload_Tr`) |
-| `pbr/` | PBR data (same as `OLATverse_Upload_Tr`) |
-| `cameras.calib` / `cameras.xml` | Camera matrix copied from the high-resolution source |
-| `all_cam.json` | Low-resolution camera matrix (same as `OLATverse_Upload_Tr`) |
+**Project page**: [https://vcai.mpi-inf.mpg.de/projects/OLATverse/](https://vcai.mpi-inf.mpg.de/projects/OLATverse/)  
+**Dataset**: [https://gvv-assets.mpi-inf.mpg.de/OLATverse/](https://gvv-assets.mpi-inf.mpg.de/OLATverse/)
 
 ---
 
-## `OLATverse_Upload_Tr`
+## 1. Dataset Download
 
-Final upload of the complete processed **training** dataset.
+The processed OLATverse dataset is available at the [dataset link](https://gvv-assets.mpi-inf.mpg.de/OLATverse/). It consists of:
 
-| Path | Description |
-|------|-------------|
-| `masked_olat/` | AVIF images **without** background |
-| `mask/` | Mask images |
-| `pbr/` | PBR data — albedo and normals (see breakdown below) |
-| `all_cam.json` | Camera matrix at resolution **1500 × 2844** |
+- **OLATverse_Tr** — the full training set containing **767 objects**, split into 11 archives (`OLATverse_Tr0001-0070.tar.gz`, ..., `OLATverse_Tr0701-0767.tar.gz`), each containing approximately 70 objects.
+- **OLATverse_Val** — a curated validation set containing **42 objects**.
 
-### PBR Sub-folders
+A per-object preview is available in [assets/preview.xlsx](assets/preview.xlsx).
 
-| Sub-folder | Description |
-|------------|-------------|
-| `{CamID}_ncg/` | Normals obtained from color gradient illumination |
-| `{CamID}_diff/` | Diffuse albedo derived from 5 polarized views |
-| `{CamID}_nd/` | Diffuse normals derived from 5 polarized views |
+To reduce storage and improve visualization, all captured images are processed as follows:
+- Downsampled to **1500 × 2844** resolution
+- Brightness adjusted for better visualization
+- Converted to sRGB and stored as **AVIF**
+- Background masked out
+
+Auxiliary data including masks, pseudo-GT normals, and diffuse albedo are also provided.
 
 ---
 
-## `OLATverse_Upload_Val`
+## 2. Data Structure
 
-Final upload of the complete processed **validation** dataset.
+### 2.1 OLATverse_Tr
 
-| Path | Description |
+The structure of each object folder is as follows:
+
+```
+data-{date}-{objID}/
+├── masked_olat/                                        # 35 camera views, background removed
+│   ├── Cam01/    xxx.000000.avif - xxx.000362.avif    # 363 AVIF images per camera
+│   ├── Cam02/
+│   └── ...
+├── mask/                                               # Foreground masks for 35 views
+│   ├── Cam01.png
+│   ├── Cam02.png
+│   └── ...
+├── pbr/                                                # Extracted normals and albedo (see below)
+└── all_cam.json                                        # Camera matrices at resolution 1500 × 2844
+```
+
+#### ▸ masked_olat
+
+Each camera folder contains **363 AVIF images** with the following structure:
+
+| File | Description |
 |------|-------------|
-| `masked_olat/` | AVIF images without background (same as Tr) |
-| `mask/` | Mask images (same as Tr) |
-| `pbr/` | PBR data — albedo and normals (same as Tr) |
-| `all_cam.json` | Camera matrix at resolution **1500 × 2844** (same as Tr) |
-| `model/` | Reconstructed mesh produced with Metashape |
-| `normal_benchmark/` | Normal maps used for benchmarking in the paper |
-| `transforms_train.json` / `transforms_test.json` | Transform files used for normal benchmarking in the paper |
+| `xxx.000000` and `xxx.000014` | Full-bright (FB) captures |
+| `xxx.000001` – `xxx.000013` | Predefined environmental illuminations |
+| `xxx.000015` – `xxx.000362` | Interleaved OLAT + FB sequence |
+
+> **Note:** The OLAT + full-bright (FB) sequences are interleaved in capture setup. The detailed sequence is documented in `shared/all_lights.json` (see below).
+
+#### ▸ all_cam.json
+
+| Field | Description |
+|-------|-------------|
+| `cam_idx` | Camera ID |
+| `transform_matrix` | Extrinsic matrix |
+| `camera_intrinsics` | Intrinsic matrix |
+
+#### ▸ pbr/
+
+| File | Description |
+|------|-------------|
+| `{CamID}_ncg.png` | Normals obtained from color-gradient illumination from all cameras |
+| `{CamID}_diff.png` | Diffuse albedo derived from 5 polarized views |
+| `{CamID}_nd.png` | Diffuse normals derived from 5 polarized views |
+
+---
+
+### 2.2 OLATverse_Val
+
+The validation set contains all data from OLATverse_Tr, plus additional files for benchmarking:
+
+```
+data-{date}-{objID}/
+├── masked_olat/              # Same as OLATverse_Tr
+├── mask/                     # Same as OLATverse_Tr
+├── pbr/                      # Same as OLATverse_Tr
+├── all_cam.json              # Same as OLATverse_Tr
+├── model/                    # Reconstructed mesh (Metashape)
+├── normal_benchmark/         # Normal maps used for benchmarking in the paper
+│   ├── gt_normal/            # 5 processed GT normals aligned to corresponding camera views
+│   ├── input/ - input3/      # 5 input images under different illuminations
+│   └── mask/                 # Masks for the 5 benchmark views
+├── transforms_train.json     # Transform file used for normal benchmarking in the paper
+└── transforms_test.json      # Transform file used for normal benchmarking in the paper
+```
+
+#### ▸ transforms_train.json / transforms_test.json
+
+| Field | Description |
+|-------|-------------|
+| `file_ext` | Image file extension |
+| `file_path` | Path to the input image |
+| `light_idx` | Light ID |
+| `cam_idx` | Camera ID |
+| `transform_matrix` | Extrinsic matrix |
+| `camera_intrinsics` | Intrinsic matrix |
+| `pl_intensity` | Hard-coded light intensity |
+| `pl_pos` | Light position |
+
+---
+
+## 3. Camera and Light Setup
+
+### 3.1 Cameras
+
+Each object is captured from **35 camera views** distributed across four layers of the light stage dome, from top to bottom. Five cameras (Cam07, Cam10, Cam17, Cam22, Cam39) are equipped with linear polarization filters, so images from these cameras typically appear darker than those from the remaining 30 regular cameras.
+
+
+| Layer | Cameras |
+|-------|---------|
+| Layer 1 (Top) | Cam24, Cam26, Cam29, Cam36, Cam40 |
+| Layer 2 | Cam01, Cam05, Cam15, Cam18, Cam20, Cam22*, Cam27, Cam30, Cam31, Cam35, Cam37, Cam38 |
+| Layer 3 | Cam03, Cam06, Cam07*, Cam09, Cam10*, Cam11, Cam12, Cam14, Cam17*, Cam19, Cam39* |
+| Layer 4 (Bottom) | Cam02, Cam04, Cam08, Cam13, Cam16, Cam23, Cam32 |
+
+> **Note:** Cameras marked with * are equipped with linear polarization filters.
+
+### 3.2 Lights
+
+The setup contains **331 individually controlled lights**. Lighting information is provided in the `shared/` folder:
+
+| File | Description |
+|------|-------------|
+| `envmap_zspiral_mpi/` | Environment map masks for each OLAT image (see correspondence table below) |
+| `all_lights.json` | Extracted 3D positions of individual lights |
+| `LSX_light_positions_aligned.pc` *(metadata)* | Raw 3D light source positions |
+| `LSX3_light_z_spiral.txt` *(metadata)* | Raw correspondence between capture-ordered ID and light ID |
+| `z_spiral.mp4` *(metadata)* | Video visualisation of environment map masks |
+
+> **Note:** Pure black images in `envmap_zspiral_mpi/` correspond to full-bright (FB) captures. The **light IDs in the raw metadata do not correspond to `light_idx` in `all_lights.json`**.
+
+#### ▸ all_lights.json
+
+| Field | Description |
+|-------|-------------|
+| `file_path` | Path to the OLAT image under the corresponding light (e.g. `obj_id.000015` ↔ `light_idx` 0, ..., `obj_id.000361` ↔ `light_idx` 330) |
+| `light_idx` | Light ID (0 – 330) |
+| `pl_intensity` | Hard-coded light intensity |
+| `pl_pos` | Light position |
+
+#### ▸ Lighting Correspondence
+
+The table below shows example correspondences between `masked_olat/`, `all_lights.json`, and `envmap_zspiral_mpi/`:
+
+| `masked_olat` | `all_lights.json` | `envmap_zspiral_mpi` |
+|---------------|-------------------|----------------------|
+| `obj_id.000014` (FB) | — | `000.png` |
+| `obj_id.000015` | `light_idx` 0 | `001.png` |
+| `obj_id.000016` | `light_idx` 1 | `002.png` |
+| `obj_id.000034` (FB) | — | `020.png` |
+| `obj_id.000035` | `light_idx` 19 | `021.png` |
+| `obj_id.000036` | `light_idx` 20 | `022.png` |
+| `obj_id.000360` | `light_idx` 329 | `346.png` |
+| `obj_id.000361` | `light_idx` 330 | `347.png` |
+| `obj_id.000362` (FB) | — | `348.png` |
