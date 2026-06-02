@@ -14,7 +14,7 @@
 For user convenience, we release the **processed** OLATverse at the [dataset link](https://gvv-assets.mpi-inf.mpg.de/OLATverse/). Users need to register an account and request access to the dataset. The dataset consists of:
 
 - **OLATverse_Tr** — the full training set containing **767 objects**, split into 11 archives (`OLATverse_Tr0001-0070.tar.gz`, ..., `OLATverse_Tr0701-0767.tar.gz`), each containing approximately 70 objects.
-- **OLATverse_Val** — a curated validation set containing **42 objects**.
+- **OLATverse_Val** — a curated validation set containing **42** carefully selected, high-quality, and diverse objects..
 
 An offline Excel for all object preview is available at [excel link](assets/preview.xlsx). It includes the capture date, object ID, category label, LVIS category, and material types (up to 2 per object). The final object ID used across OLATverse follows this format: `data-{date}-{objectID}`
 
@@ -78,6 +78,8 @@ Extracted pseudo-GT normal/albedo for each object:
 | `{CamID}_ncg.png` | Normals obtained from color-gradient illumination from all cameras |
 | `{CamID}_diff.png` | Diffuse albedo derived from 5 polarized views |
 | `{CamID}_nd.png` | Diffuse normals derived from 5 polarized views |
+
+> **Note:** Normals `{CamID}_nd.png` extracted from five polarized views appears to be more accuate than normals obtained via color-gradient illumination.
 
 ---
 
